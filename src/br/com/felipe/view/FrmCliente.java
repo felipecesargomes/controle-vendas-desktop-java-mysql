@@ -1,23 +1,14 @@
 package br.com.felipe.view;
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import java.awt.Font;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JFormattedTextField;
-import javax.swing.JComboBox;
+import java.awt.*;
+import javax.swing.*;
 
 public class FrmCliente extends JFrame {
 
 	/**
-	 * 
+	 * @author Felipe César
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -37,9 +28,6 @@ public class FrmCliente extends JFrame {
 	private JTextField txtRg;
 	private JTextField txtCpf;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -53,9 +41,6 @@ public class FrmCliente extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public FrmCliente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 833, 578);
