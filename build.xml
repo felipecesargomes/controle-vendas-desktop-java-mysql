@@ -1,4 +1,4 @@
-<project name="teste-ivy" xmlns:ivy="antlib:org.apache.ivy.ant" default="atualiza-dependencias">
+<project name="controle-vendas-desktop-java-mysql" xmlns:ivy="antlib:org.apache.ivy.ant" default="atualiza-dependencias">
 
 	<path id="ivy.lib.path">
 		<fileset dir="ivy-lib" includes="*.jar"></fileset>
