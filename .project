@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>teste-ivy</name>
+	<name>controle-vendas-desktop-java-mysql</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,4 +14,10 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>ivy_lib</name>
+			<value>file:/C:/Users/wwwfe/git/controle-vendas-desktop-java-mysql/ivy-lib</value>
+		</variable>
+	</variableList>
 </projectDescription>
