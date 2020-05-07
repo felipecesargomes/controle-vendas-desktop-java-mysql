@@ -7,5 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="ivy-lib/ivy-2.5.0.jar"/>
+	<classpathentry kind="lib" path="libs/looksdemo-2.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
