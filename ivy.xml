@@ -5,7 +5,7 @@
 	<info module="controle-vendas-desktop-java-mysql" organisation="br.com.caelum" />
 
 	<dependencies>
-		<dependency org="mysql" name="mysql-connector-java" rev="8.0.19"/>
+		<dependency org="mysql" name="mysql-connector-java" rev="8.0.19" conf="default"/>
 	</dependencies>
 
 </ivy-module>
