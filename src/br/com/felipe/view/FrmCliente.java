@@ -1,8 +1,15 @@
 package br.com.felipe.view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
+import br.com.felipe.dao.ClientesDAO;
+import br.com.felipe.model.Clientes;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -13,6 +20,7 @@ public class FrmCliente extends JFrame {
 	/**
 	 * @author Felipe César
 	 */
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textCodigo;
@@ -28,14 +36,20 @@ public class FrmCliente extends JFrame {
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtComplemento;
-	private JTextField txtRg;
-	private JTextField txtCpf;
+	private JFormattedTextField txtRg;
+	private JFormattedTextField txtCpf;
+	private JFormattedTextField txtNumero;
+	private JFormattedTextField txtCelular;
+	private JFormattedTextField txtTel;
+	private JFormattedTextField txtCep;
 	private JTextField txtNomePesquisa;
+	private JComboBox comboBox;
 	private JTable table;
 
 	public static void main(String[] args) {
-		
+
 		try {
+			// Foreach para escolhe o tema do windows
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Windows Classic".equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -47,7 +61,7 @@ public class FrmCliente extends JFrame {
 			java.util.logging.Logger.getLogger(FrmCliente.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		}
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -135,23 +149,23 @@ public class FrmCliente extends JFrame {
 		lblCelular.setBounds(279, 80, 49, 14);
 		painelDadosPessoais.add(lblCelular);
 
-		JFormattedTextField txtFormatCelular = new JFormattedTextField(mascaraCelular);
-		txtFormatCelular.setBounds(329, 77, 131, 20);
-		painelDadosPessoais.add(txtFormatCelular);
+		txtCelular = new JFormattedTextField(mascaraCelular);
+		txtCelular.setBounds(329, 77, 131, 20);
+		painelDadosPessoais.add(txtCelular);
 
 		JLabel lblTelefoneFixo = new JLabel("Telefone Fixo:");
 		lblTelefoneFixo.setBounds(476, 80, 78, 14);
 		painelDadosPessoais.add(lblTelefoneFixo);
 
-		JFormattedTextField txtFormatTel = new JFormattedTextField(mascaraTelefoneFixo);
-		txtFormatTel.setBounds(555, 77, 162, 20);
-		painelDadosPessoais.add(txtFormatTel);
+		txtTel = new JFormattedTextField(mascaraTelefoneFixo);
+		txtTel.setBounds(555, 77, 162, 20);
+		painelDadosPessoais.add(txtTel);
 
 		JLabel lblCep = new JLabel("CEP:");
 		lblCep.setBounds(10, 108, 44, 14);
 		painelDadosPessoais.add(lblCep);
 
-		JFormattedTextField txtCep = new JFormattedTextField(mascaraCep);
+		txtCep = new JFormattedTextField(mascaraCep);
 		txtCep.setBounds(53, 105, 96, 20);
 		painelDadosPessoais.add(txtCep);
 
@@ -168,9 +182,10 @@ public class FrmCliente extends JFrame {
 		lblN.setBounds(594, 108, 55, 14);
 		painelDadosPessoais.add(lblN);
 
-		JFormattedTextField txtFormatNumero = new JFormattedTextField(mascaraNumero);
-		txtFormatNumero.setBounds(648, 105, 144, 20);
-		painelDadosPessoais.add(txtFormatNumero);
+		txtNumero = new JFormattedTextField(mascaraNumero);
+		txtNumero.setBounds(648, 105, 144, 20);
+		txtNumero.setColumns(10);
+		painelDadosPessoais.add(txtNumero);
 
 		JLabel lblBairro = new JLabel("Bairro:");
 		lblBairro.setBounds(10, 136, 44, 14);
@@ -203,7 +218,8 @@ public class FrmCliente extends JFrame {
 		lblUF.setBounds(707, 136, 19, 14);
 		painelDadosPessoais.add(lblUF);
 
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"PB"}));
 		comboBox.setBounds(735, 133, 57, 20);
 		painelDadosPessoais.add(comboBox);
 
@@ -256,16 +272,49 @@ public class FrmCliente extends JFrame {
 		btnNewButton.setBounds(218, 332, 89, 23);
 		contentPane.add(btnNewButton);
 
-		JButton button = new JButton("Salvar");
-		button.setBounds(317, 332, 89, 23);
-		contentPane.add(button);
+		JButton botaoSalvar = new JButton("Salvar");
 
-		JButton button_1 = new JButton("Editar");
-		button_1.setBounds(416, 332, 89, 23);
-		contentPane.add(button_1);
+		botaoSalvar.setBounds(317, 332, 89, 23);
+		contentPane.add(botaoSalvar);
+		botaoSalvar.addActionListener(new ActionListener() {
 
-		JButton button_2 = new JButton("Excluir");
-		button_2.setBounds(515, 332, 89, 23);
-		contentPane.add(button_2);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					Clientes c = new Clientes();
+					c.setNome(textNome.getText());
+					c.setRg(txtRg.getText());
+					c.setCpf(txtCpf.getText());
+					c.setEmail(txtEmail.getText());
+					c.setTelefone(txtTel.getText());
+					c.setCelular(txtCelular.getText());
+					c.setCep(txtCep.getText());
+					c.setEndereco(txtEndereco.getText());
+					c.setNumero(Integer.parseInt(txtNumero.getText()));
+					c.setComplemento(txtComplemento.getText());
+					c.setBairro(txtBairro.getText());
+					c.setCidade(txtCidade.getText());
+					c.setEstado(comboBox.getSelectedItem().toString());
+
+					ClientesDAO dao = new ClientesDAO();
+					dao.inserirCliente(c);
+					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+
+				} catch (Exception erro) {
+					JOptionPane.showMessageDialog(null, "Erro!" + erro);
+				}
+
+			}
+		});
+
+		JButton botaoEditar = new JButton("Editar");
+		botaoEditar.setBounds(416, 332, 89, 23);
+		contentPane.add(botaoEditar);
+
+		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.setBounds(515, 332, 89, 23);
+		contentPane.add(botaoExcluir);
 	}
+
 }
