@@ -7,7 +7,7 @@ public class ConnectionFactory {
 
 	public Connection getConnection() {
 		try {
-			return DriverManager.getConnection("jdbc:mysql://127.0.0.1/bdvendas?useTimezone=true&serverTimezone=UTC","vendas","123");
+			return DriverManager.getConnection("jdbc:mysql://127.0.0.1/bdvendas?useTimezone=true&serverTimezone=UTC","vendas","1233");
 		} catch(Exception erro) {
 			throw new RuntimeException(erro);
 		}
