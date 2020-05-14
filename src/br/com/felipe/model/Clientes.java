@@ -1,5 +1,7 @@
 package br.com.felipe.model;
 
+import br.com.felipe.util.Tratamentos;
+
 public class Clientes {
 
 	private Long id;
@@ -30,7 +32,7 @@ public class Clientes {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = Tratamentos.removerAcentosUpperCase(nome);
 	}
 
 	public String getRg() {

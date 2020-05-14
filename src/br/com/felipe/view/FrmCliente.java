@@ -1,8 +1,6 @@
 package br.com.felipe.view;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
@@ -29,21 +27,19 @@ public class FrmCliente extends JFrame {
 	private MaskFormatter mascaraCelular;
 	private MaskFormatter mascaraTelefoneFixo;
 	private MaskFormatter mascaraCep;
-	private MaskFormatter mascaraNumero;
-	private MaskFormatter mascaraRg;
 	private MaskFormatter mascaraCpf;
 	private JTextField txtEndereco;
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtComplemento;
-	private JFormattedTextField txtRg;
+	private JTextField txtRg;
 	private JFormattedTextField txtCpf;
-	private JFormattedTextField txtNumero;
+	private JTextField txtNumero;
 	private JFormattedTextField txtCelular;
 	private JFormattedTextField txtTel;
 	private JFormattedTextField txtCep;
 	private JTextField txtNomePesquisa;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	private JTable table;
 
 	public static void main(String[] args) {
@@ -87,8 +83,6 @@ public class FrmCliente extends JFrame {
 			mascaraCelular = new MaskFormatter("(##)####-####");
 			mascaraTelefoneFixo = new MaskFormatter("(##)####-####");
 			mascaraCep = new MaskFormatter("#####-###");
-			mascaraNumero = new MaskFormatter("#######");
-			mascaraRg = new MaskFormatter("#########");
 			mascaraCpf = new MaskFormatter("###.###.###-##");
 
 		} catch (java.text.ParseException excp) {
@@ -182,7 +176,7 @@ public class FrmCliente extends JFrame {
 		lblN.setBounds(594, 108, 55, 14);
 		painelDadosPessoais.add(lblN);
 
-		txtNumero = new JFormattedTextField(mascaraNumero);
+		txtNumero = new JTextField();
 		txtNumero.setBounds(648, 105, 144, 20);
 		txtNumero.setColumns(10);
 		painelDadosPessoais.add(txtNumero);
@@ -218,8 +212,8 @@ public class FrmCliente extends JFrame {
 		lblUF.setBounds(707, 136, 19, 14);
 		painelDadosPessoais.add(lblUF);
 
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"PB"}));
+		comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "PB" }));
 		comboBox.setBounds(735, 133, 57, 20);
 		painelDadosPessoais.add(comboBox);
 
@@ -227,7 +221,7 @@ public class FrmCliente extends JFrame {
 		lblRg.setBounds(10, 167, 44, 14);
 		painelDadosPessoais.add(lblRg);
 
-		txtRg = new JFormattedTextField(mascaraRg);
+		txtRg = new JTextField();
 		txtRg.setColumns(10);
 		txtRg.setBounds(53, 164, 162, 20);
 		painelDadosPessoais.add(txtRg);
@@ -296,10 +290,8 @@ public class FrmCliente extends JFrame {
 					c.setBairro(txtBairro.getText());
 					c.setCidade(txtCidade.getText());
 					c.setEstado(comboBox.getSelectedItem().toString());
-
 					ClientesDAO dao = new ClientesDAO();
 					dao.inserirCliente(c);
-					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
 
 				} catch (Exception erro) {
 					JOptionPane.showMessageDialog(null, "Erro!" + erro);
