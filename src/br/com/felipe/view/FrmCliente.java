@@ -293,6 +293,9 @@ public class FrmCliente extends JFrame {
 					ClientesDAO dao = new ClientesDAO();
 					dao.inserirCliente(c);
 
+				} catch (NumberFormatException erroFormat) {
+					JOptionPane.showMessageDialog(null, "Verifique o formato dos Campos.");
+					System.out.println(erroFormat);
 				} catch (Exception erro) {
 					JOptionPane.showMessageDialog(null, "Erro!" + erro);
 				}

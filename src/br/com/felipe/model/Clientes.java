@@ -40,7 +40,7 @@ public class Clientes {
 	}
 
 	public void setRg(String rg) {
-		this.rg = rg;
+		this.rg = Tratamentos.removerAcentosUpperCase(rg);
 	}
 
 	public String getCpf() {
@@ -48,7 +48,7 @@ public class Clientes {
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		this.cpf = Tratamentos.removerPontos(cpf);
 	}
 
 	public String getEmail() {
@@ -56,7 +56,7 @@ public class Clientes {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = Tratamentos.removerAcentosUpperCase(email);
 	}
 
 	public String getTelefone() {
@@ -64,7 +64,7 @@ public class Clientes {
 	}
 
 	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+		this.telefone = Tratamentos.removerPontos(telefone);
 	}
 
 	public String getCelular() {
@@ -72,7 +72,7 @@ public class Clientes {
 	}
 
 	public void setCelular(String celular) {
-		this.celular = celular;
+		this.celular = Tratamentos.removerPontos(celular);
 	}
 
 	public String getCep() {
@@ -80,7 +80,7 @@ public class Clientes {
 	}
 
 	public void setCep(String cep) {
-		this.cep = cep;
+		this.cep = Tratamentos.removerPontos(cep);
 	}
 
 	public String getEndereco() {
@@ -88,7 +88,7 @@ public class Clientes {
 	}
 
 	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+		this.endereco = Tratamentos.removerAcentosUpperCase(endereco);
 	}
 
 	public int getNumero() {
@@ -96,7 +96,7 @@ public class Clientes {
 	}
 
 	public void setNumero(int numero) {
-		this.numero = numero;
+		this.numero = Integer.parseInt(Tratamentos.removerPontos(Integer.toString(numero)));
 	}
 
 	public String getComplemento() {
@@ -104,7 +104,7 @@ public class Clientes {
 	}
 
 	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+		this.complemento = Tratamentos.removerAcentosUpperCase(complemento);
 	}
 
 	public String getBairro() {
@@ -112,7 +112,7 @@ public class Clientes {
 	}
 
 	public void setBairro(String bairro) {
-		this.bairro = bairro;
+		this.bairro = Tratamentos.removerAcentosUpperCase(bairro);
 	}
 
 	public String getCidade() {
@@ -120,7 +120,7 @@ public class Clientes {
 	}
 
 	public void setCidade(String cidade) {
-		this.cidade = cidade;
+		this.cidade = Tratamentos.removerAcentosUpperCase(cidade);
 	}
 
 	public String getEstado() {
@@ -128,7 +128,7 @@ public class Clientes {
 	}
 
 	public void setEstado(String estado) {
-		this.estado = estado;
+		this.estado = Tratamentos.removerAcentosUpperCase(estado);
 	}
 
 }
