@@ -55,7 +55,7 @@ public class ClientesDAO {
 
 	public void atualizarCliente(Clientes c) {
 		try {
-			String sql = "update tb_cliente set id=?, nome=?, rg=?, cpf=?, email=?, telefone=?, celular=?, cep=?, endereco=?, numero=?, complemento=?, bairro=?, cidade=?, estado=? where id=?";
+			String sql = "update tb_clientes set nome=?, rg=?, cpf=?, email=?, telefone=?, celular=?, cep=?, endereco=?, numero=?, complemento=?, bairro=?, cidade=?, estado=? where id=?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, c.getNome());
 			stmt.setString(2, c.getRg());

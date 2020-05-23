@@ -168,6 +168,7 @@ public class FrmCliente extends JFrame {
 		painelDadosPessoais.add(codigoDadosPessoais);
 
 		textCodigo = new JTextField();
+		textCodigo.setEditable(false);
 		textCodigo.setBounds(53, 23, 44, 20);
 		painelDadosPessoais.add(textCodigo);
 		textCodigo.setColumns(10);
@@ -376,6 +377,37 @@ public class FrmCliente extends JFrame {
 		});
 
 		JButton botaoEditar = new JButton("Editar");
+		botaoEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				try {
+					Clientes c = new Clientes();
+					c.setNome(textNome.getText());
+					c.setRg(txtRg.getText());
+					c.setCpf(txtCpf.getText());
+					c.setEmail(txtEmail.getText());
+					c.setTelefone(txtTel.getText());
+					c.setCelular(txtCelular.getText());
+					c.setCep(txtCep.getText());
+					c.setEndereco(txtEndereco.getText());
+					c.setNumero(Integer.parseInt(txtNumero.getText()));
+					c.setComplemento(txtComplemento.getText());
+					c.setBairro(txtBairro.getText());
+					c.setCidade(txtCidade.getText());
+					c.setEstado(cbUf.getSelectedItem().toString());
+					c.setId(Long.parseLong(textCodigo.getText()));
+					ClientesDAO dao = new ClientesDAO();
+					dao.atualizarCliente(c);
+
+				} catch (NumberFormatException erroFormat) {
+					JOptionPane.showMessageDialog(null, "Verifique o formato dos Campos.");
+					System.out.println(erroFormat);
+				} catch (Exception erro) {
+					JOptionPane.showMessageDialog(null, "Erro!" + erro);
+				}
+			}
+		});
 		botaoEditar.setBounds(416, 332, 89, 23);
 		contentPane.add(botaoEditar);
 
