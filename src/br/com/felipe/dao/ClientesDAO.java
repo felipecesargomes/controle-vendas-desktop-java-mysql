@@ -1,6 +1,9 @@
 package br.com.felipe.dao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +50,45 @@ public class ClientesDAO {
 	}
 
 	public void atualizarCliente(Clientes c) {
-
+		try {
+			String sql = "update tb_cliente set id=?, nome=?, rg=?, cpf=?, email=?, telefone=?, celular=?, cep=?, endereco=?, numero=?, complemento=?, bairro=?, cidade=?, estado=? where id=?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, c.getNome());
+			stmt.setString(2, c.getRg());
+			stmt.setString(3, c.getCpf());
+			stmt.setString(4, c.getEmail());
+			stmt.setString(5, c.getTelefone());
+			stmt.setString(6, c.getCelular());
+			stmt.setString(7, c.getCep());
+			stmt.setString(8, c.getEndereco());
+			stmt.setInt(9, c.getNumero());
+			stmt.setString(10, c.getComplemento());
+			stmt.setString(11, c.getBairro());
+			stmt.setString(12, c.getCidade());
+			stmt.setString(13, c.getEstado());
+			stmt.setLong(14, c.getId());
+			
+			stmt.execute();
+			stmt.close();
+			
+			JOptionPane.showMessageDialog(null, "Alterado com Sucesso");
+		} catch (SQLException erro) {
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + erro);
+		}
 	}
 
 	public void apagarCliente(Clientes c) {
+		try {
+			String sql = "delete from tb_cliente where id=?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setLong(1, c.getId());
+			stmt.execute();
+			stmt.close();
+			
+			JOptionPane.showMessageDialog(null, "Usuário apagado com sucesso!");
+		} catch (SQLException erro) {
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + erro);
+		}
 
 	}
 

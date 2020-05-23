@@ -345,14 +345,7 @@ public class FrmCliente extends JFrame {
 			}
 		});
 		
-		btnPesquisar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				listar();
-				
-			}
-		});
+		listar();
 
 		JButton botaoEditar = new JButton("Editar");
 		botaoEditar.setBounds(416, 332, 89, 23);
