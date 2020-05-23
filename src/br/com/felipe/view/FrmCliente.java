@@ -26,6 +26,10 @@ import javax.swing.text.MaskFormatter;
 
 import br.com.felipe.dao.ClientesDAO;
 import br.com.felipe.model.Clientes;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class FrmCliente extends JFrame {
 
@@ -53,11 +57,11 @@ public class FrmCliente extends JFrame {
 	private JFormattedTextField txtTel;
 	private JFormattedTextField txtCep;
 	private JTextField txtNomePesquisa;
-	private JComboBox<String> comboBox;
+	private JComboBox<String> cbUf;
 	private JTable tabelaClientes;
 
 	public static void main(String[] args) {
-
+		
 		try {
 			// Foreach para escolhe o tema do windows
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -95,24 +99,30 @@ public class FrmCliente extends JFrame {
 			dados.addRow(new Object[] {
 					c.getId(),
 					c.getNome(),
-					c.getRg(),
-					c.getCpf(),
 					c.getEmail(),
-					c.getTelefone(),
 					c.getCelular(),
+					c.getTelefone(),
 					c.getCep(),
 					c.getEndereco(),
 					c.getNumero(),
-					c.getComplemento(),
 					c.getBairro(),
 					c.getCidade(),
-					c.getEstado()
+					c.getComplemento(),
+					c.getEstado(),
+					c.getCpf(),
+					c.getRg()
 			});
 		}
 			
 	}
 
 	public FrmCliente() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				listar();
+			}
+		});
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 406);
@@ -133,7 +143,7 @@ public class FrmCliente extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(0, 0, 826, 60);
+		panel.setBounds(0, 0, 834, 60);
 		panel.setBackground(new Color(0, 102, 204));
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -254,10 +264,10 @@ public class FrmCliente extends JFrame {
 		lblUF.setBounds(707, 136, 19, 14);
 		painelDadosPessoais.add(lblUF);
 
-		comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "PB" }));
-		comboBox.setBounds(735, 133, 57, 20);
-		painelDadosPessoais.add(comboBox);
+		cbUf = new JComboBox<String>();
+		cbUf.setModel(new DefaultComboBoxModel(new String[] {"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"}));
+		cbUf.setBounds(735, 133, 57, 20);
+		painelDadosPessoais.add(cbUf);
 
 		JLabel lblRg = new JLabel("RG:");
 		lblRg.setBounds(10, 167, 44, 14);
@@ -299,6 +309,26 @@ public class FrmCliente extends JFrame {
 		panel_1.add(scrollPane);
 
 		tabelaClientes = new JTable();
+		tabelaClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tabbedPane_1.setSelectedIndex(0);
+				textCodigo.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0).toString());
+				textNome.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 1).toString());
+				txtEmail.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 2).toString());
+				txtCelular.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 3).toString());
+				txtTel.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 4).toString());
+				txtCep.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 5).toString());
+				txtEndereco.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 6).toString());
+				txtNumero.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 7).toString());
+				txtBairro.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 8).toString());
+				txtCidade.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 9).toString());
+				txtComplemento.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 10).toString());
+				cbUf.setSelectedItem(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 11).toString());
+				txtCpf.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 12).toString());
+				txtRg.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 13).toString());				
+			}
+		});
 		tabelaClientes.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "C\u00F3digo", "Nome", "Email", "Celular", "Telefone Fixo", "CEP", "Endere\u00E7o",
 						"Numero", "Bairro", "Cidade", "Complemento", "UF", "CPF", "RG" }));
@@ -331,7 +361,7 @@ public class FrmCliente extends JFrame {
 					c.setComplemento(txtComplemento.getText());
 					c.setBairro(txtBairro.getText());
 					c.setCidade(txtCidade.getText());
-					c.setEstado(comboBox.getSelectedItem().toString());
+					c.setEstado(cbUf.getSelectedItem().toString());
 					ClientesDAO dao = new ClientesDAO();
 					dao.inserirCliente(c);
 
@@ -344,8 +374,6 @@ public class FrmCliente extends JFrame {
 
 			}
 		});
-		
-		listar();
 
 		JButton botaoEditar = new JButton("Editar");
 		botaoEditar.setBounds(416, 332, 89, 23);

@@ -4,6 +4,10 @@ import java.text.Normalizer;
 
 public class Tratamentos {
 
+	/**
+	 * @author Felipe César
+	 */
+	
 	public static String removerAcentosUpperCase(String str) {
 		return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "").toUpperCase();
 	}

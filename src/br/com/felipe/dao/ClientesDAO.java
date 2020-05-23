@@ -14,6 +14,10 @@ import br.com.felipe.model.Clientes;
 
 public class ClientesDAO {
 
+	/**
+	 * @author Felipe César
+	 */
+	
 	private Connection conn;
 
 	public ClientesDAO() {

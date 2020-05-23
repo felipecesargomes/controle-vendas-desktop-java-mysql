@@ -4,6 +4,10 @@ import br.com.felipe.util.Tratamentos;
 
 public class Clientes {
 
+	/**
+	 * @author Felipe César
+	 */
+	
 	private Long id;
 	private String nome;
 	private String rg;
