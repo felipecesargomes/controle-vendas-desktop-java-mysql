@@ -1,6 +1,8 @@
 package br.com.felipe.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -50,6 +52,41 @@ public class ClientesDAO {
 
 	public void apagarCliente(Clientes c) {
 
+	}
+
+	public List<Clientes> listarClientes() {
+
+		try {
+			List<Clientes> lista = new ArrayList<Clientes>();
+			String sql = "select * from tb_clientes";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Clientes obj = new Clientes();
+				obj.setId(rs.getLong("id"));
+				obj.setNome(rs.getString("nome"));
+				obj.setRg(rs.getString("rg"));
+				obj.setCpf(rs.getString("cpf"));
+				obj.setEmail(rs.getString("email"));
+				obj.setBairro(rs.getString("bairro"));
+				obj.setCelular(rs.getString("celular"));
+				obj.setCep(rs.getString("cep"));
+				obj.setCidade(rs.getString("cidade"));
+				obj.setComplemento(rs.getString("complemento"));
+				obj.setEndereco(rs.getString("endereco"));
+				obj.setEstado(rs.getString("estado"));
+				obj.setNumero(rs.getInt("numero"));
+				obj.setTelefone(rs.getString("telefone"));
+
+				lista.add(obj);
+
+			}
+			return lista;
+		} catch (Exception erro) {
+			JOptionPane.showMessageDialog(null, "Erro: " + erro);
+			return null;
+		}
 	}
 
 }

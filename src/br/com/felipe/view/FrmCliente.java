@@ -1,17 +1,31 @@
 package br.com.felipe.view;
 
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import br.com.felipe.dao.ClientesDAO;
 import br.com.felipe.model.Clientes;
-
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableModel;
 
 public class FrmCliente extends JFrame {
 
@@ -40,7 +54,7 @@ public class FrmCliente extends JFrame {
 	private JFormattedTextField txtCep;
 	private JTextField txtNomePesquisa;
 	private JComboBox<String> comboBox;
-	private JTable table;
+	private JTable tabelaClientes;
 
 	public static void main(String[] args) {
 
@@ -68,6 +82,34 @@ public class FrmCliente extends JFrame {
 				}
 			}
 		});
+	}
+
+	// Metodo Listar na Tabela
+	public void listar() {
+		ClientesDAO dao = new ClientesDAO();
+		java.util.List<Clientes> lista = dao.listarClientes();
+		DefaultTableModel dados = (DefaultTableModel) tabelaClientes.getModel();
+		dados.setNumRows(0);
+
+		for (Clientes c : lista) {
+			dados.addRow(new Object[] {
+					c.getId(),
+					c.getNome(),
+					c.getRg(),
+					c.getCpf(),
+					c.getEmail(),
+					c.getTelefone(),
+					c.getCelular(),
+					c.getCep(),
+					c.getEndereco(),
+					c.getNumero(),
+					c.getComplemento(),
+					c.getBairro(),
+					c.getCidade(),
+					c.getEstado()
+			});
+		}
+			
 	}
 
 	public FrmCliente() {
@@ -256,11 +298,11 @@ public class FrmCliente extends JFrame {
 		scrollPane.setBounds(10, 54, 782, 157);
 		panel_1.add(scrollPane);
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {},
+		tabelaClientes = new JTable();
+		tabelaClientes.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "C\u00F3digo", "Nome", "Email", "Celular", "Telefone Fixo", "CEP", "Endere\u00E7o",
 						"Numero", "Bairro", "Cidade", "Complemento", "UF", "CPF", "RG" }));
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(tabelaClientes);
 
 		JButton btnNewButton = new JButton("Novo");
 		btnNewButton.setBounds(218, 332, 89, 23);
@@ -300,6 +342,15 @@ public class FrmCliente extends JFrame {
 					JOptionPane.showMessageDialog(null, "Erro!" + erro);
 				}
 
+			}
+		});
+		
+		btnPesquisar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				listar();
+				
 			}
 		});
 
