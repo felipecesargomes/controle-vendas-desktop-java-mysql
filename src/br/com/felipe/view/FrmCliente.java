@@ -26,6 +26,8 @@ import javax.swing.text.MaskFormatter;
 
 import br.com.felipe.dao.ClientesDAO;
 import br.com.felipe.model.Clientes;
+import br.com.felipe.util.LimpaTela;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -377,6 +379,11 @@ public class FrmCliente extends JFrame {
 		scrollPane.setViewportView(tabelaClientes);
 
 		JButton btnNewButton = new JButton("Novo");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new LimpaTela(painelDadosPessoais);
+			}
+		});
 		btnNewButton.setBounds(218, 332, 89, 23);
 		contentPane.add(btnNewButton);
 
@@ -407,6 +414,7 @@ public class FrmCliente extends JFrame {
 					ClientesDAO dao = new ClientesDAO();
 					dao.inserirCliente(c);
 					listar();
+					new LimpaTela(painelDadosPessoais);
 
 				} catch (NumberFormatException erroFormat) {
 					JOptionPane.showMessageDialog(null, "Verifique o formato dos Campos.");
@@ -419,6 +427,10 @@ public class FrmCliente extends JFrame {
 		});
 
 		JButton botaoEditar = new JButton("Editar");
+		botaoEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		botaoEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -442,6 +454,7 @@ public class FrmCliente extends JFrame {
 					ClientesDAO dao = new ClientesDAO();
 					dao.atualizarCliente(c);
 					listar();
+					new LimpaTela(painelDadosPessoais);
 
 				} catch (NumberFormatException erroFormat) {
 					JOptionPane.showMessageDialog(null, "Verifique o formato dos Campos.");
@@ -455,6 +468,10 @@ public class FrmCliente extends JFrame {
 		contentPane.add(botaoEditar);
 
 		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		botaoExcluir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -464,7 +481,8 @@ public class FrmCliente extends JFrame {
 					ClientesDAO dao = new ClientesDAO();
 					dao.apagarCliente(c);
 					listar();
-				}catch(Exception erro) {
+					new LimpaTela(painelDadosPessoais);
+				} catch(Exception erro) {
 					JOptionPane.showMessageDialog(null, "Erro!" + erro);
 				}
 			}
