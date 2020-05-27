@@ -11,13 +11,14 @@ import javax.swing.JOptionPane;
 
 import br.com.felipe.jdbc.ConnectionFactory;
 import br.com.felipe.model.Clientes;
+import jdk.nashorn.internal.ir.CatchNode;
 
 public class ClientesDAO {
 
 	/**
 	 * @author Felipe César
 	 */
-	
+
 	private Connection conn;
 
 	public ClientesDAO() {
@@ -71,10 +72,10 @@ public class ClientesDAO {
 			stmt.setString(12, c.getCidade());
 			stmt.setString(13, c.getEstado());
 			stmt.setLong(14, c.getId());
-			
+
 			stmt.execute();
 			stmt.close();
-			
+
 			JOptionPane.showMessageDialog(null, "Alterado com Sucesso");
 		} catch (SQLException erro) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + erro);
@@ -83,12 +84,12 @@ public class ClientesDAO {
 
 	public void apagarCliente(Clientes c) {
 		try {
-			String sql = "delete from tb_cliente where id=?";
+			String sql = "delete from tb_clientes where id=?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setLong(1, c.getId());
 			stmt.execute();
 			stmt.close();
-			
+
 			JOptionPane.showMessageDialog(null, "Usuário apagado com sucesso!");
 		} catch (SQLException erro) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + erro);
@@ -131,4 +132,37 @@ public class ClientesDAO {
 		}
 	}
 
+	public List<Clientes> buscarPorNome(String nome) {
+		try {
+			List<Clientes> lista = new ArrayList<Clientes>();
+			String sql = "select * from tb_clientes where nome like ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, nome);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Clientes obj = new Clientes();
+				obj.setId(rs.getLong("id"));
+				obj.setNome(rs.getString("nome"));
+				obj.setRg(rs.getString("rg"));
+				obj.setCpf(rs.getString("cpf"));
+				obj.setEmail(rs.getString("email"));
+				obj.setBairro(rs.getString("bairro"));
+				obj.setCelular(rs.getString("celular"));
+				obj.setCep(rs.getString("cep"));
+				obj.setCidade(rs.getString("cidade"));
+				obj.setComplemento(rs.getString("complemento"));
+				obj.setEndereco(rs.getString("endereco"));
+				obj.setEstado(rs.getString("estado"));
+				obj.setNumero(rs.getInt("numero"));
+				obj.setTelefone(rs.getString("telefone"));
+
+				lista.add(obj);
+			}
+			return lista;
+		} catch (SQLException erro) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Erro: " + erro);
+			return null;
+		}
+	}
 }

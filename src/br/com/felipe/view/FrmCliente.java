@@ -88,7 +88,7 @@ public class FrmCliente extends JFrame {
 		});
 	}
 
-	// Metodo Listar na Tabela
+	// Metodo Listar na Tabela (TOTAL)
 	public void listar() {
 		ClientesDAO dao = new ClientesDAO();
 		java.util.List<Clientes> lista = dao.listarClientes();
@@ -113,6 +113,41 @@ public class FrmCliente extends JFrame {
 					c.getRg()
 			});
 		}
+			
+	}
+	
+	// Metodo Lista por Nome
+	public void listarPorNome() {
+		String nome = "%" + txtNomePesquisa.getText() + "%";
+		
+		ClientesDAO dao = new ClientesDAO();
+		java.util.List<Clientes> lista = dao.buscarPorNome(nome);
+		DefaultTableModel dados = (DefaultTableModel) tabelaClientes.getModel();
+		dados.setNumRows(0);
+		
+		if(!lista.isEmpty()) {
+			for (Clientes c : lista) {
+				dados.addRow(new Object[] {
+						c.getId(),
+						c.getNome(),
+						c.getEmail(),
+						c.getCelular(),
+						c.getTelefone(),
+						c.getCep(),
+						c.getEndereco(),
+						c.getNumero(),
+						c.getBairro(),
+						c.getCidade(),
+						c.getComplemento(),
+						c.getEstado(),
+						c.getCpf(),
+						c.getRg()
+				});
+			}
+		} else {
+			dados.setNumRows(0);
+		}
+		
 			
 	}
 
@@ -302,6 +337,12 @@ public class FrmCliente extends JFrame {
 		panel_1.add(nomePesquisa);
 
 		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				listarPorNome();
+			}
+		});
 		btnPesquisar.setBounds(259, 22, 89, 21);
 		panel_1.add(btnPesquisar);
 
@@ -365,6 +406,7 @@ public class FrmCliente extends JFrame {
 					c.setEstado(cbUf.getSelectedItem().toString());
 					ClientesDAO dao = new ClientesDAO();
 					dao.inserirCliente(c);
+					listar();
 
 				} catch (NumberFormatException erroFormat) {
 					JOptionPane.showMessageDialog(null, "Verifique o formato dos Campos.");
@@ -399,6 +441,7 @@ public class FrmCliente extends JFrame {
 					c.setId(Long.parseLong(textCodigo.getText()));
 					ClientesDAO dao = new ClientesDAO();
 					dao.atualizarCliente(c);
+					listar();
 
 				} catch (NumberFormatException erroFormat) {
 					JOptionPane.showMessageDialog(null, "Verifique o formato dos Campos.");
@@ -412,6 +455,20 @@ public class FrmCliente extends JFrame {
 		contentPane.add(botaoEditar);
 
 		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Clientes c = new Clientes();
+					c.setId(Long.parseLong(textCodigo.getText()));
+					ClientesDAO dao = new ClientesDAO();
+					dao.apagarCliente(c);
+					listar();
+				}catch(Exception erro) {
+					JOptionPane.showMessageDialog(null, "Erro!" + erro);
+				}
+			}
+		});
 		botaoExcluir.setBounds(515, 332, 89, 23);
 		contentPane.add(botaoExcluir);
 	}
