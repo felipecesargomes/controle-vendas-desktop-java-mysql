@@ -27,11 +27,14 @@ import javax.swing.text.MaskFormatter;
 import br.com.felipe.dao.ClientesDAO;
 import br.com.felipe.model.Clientes;
 import br.com.felipe.util.LimpaTela;
+import br.com.felipe.util.WebServiceCep;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrmCliente extends JFrame {
 
@@ -89,6 +92,7 @@ public class FrmCliente extends JFrame {
 			}
 		});
 	}
+
 
 	// Metodo Listar na Tabela (TOTAL)
 	public void listar() {
@@ -250,6 +254,23 @@ public class FrmCliente extends JFrame {
 		painelDadosPessoais.add(lblCep);
 
 		txtCep = new JFormattedTextField(mascaraCep);
+		txtCep.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent evt) {
+				
+				if (evt.getKeyCode() == KeyEvent.VK_ENTER) { 
+			         Clientes obj =  new Clientes();
+			         ClientesDAO dao = new ClientesDAO();
+			         obj = dao.buscaCep(txtCep.getText());
+			         
+			         txtEndereco.setText(obj.getEndereco());
+			         txtBairro.setText(obj.getBairro());
+			         txtCidade.setText(obj.getCidade());
+			         cbUf.setSelectedItem(obj.getEstado());               			         
+			     }
+				
+			}
+		});
 		txtCep.setBounds(53, 105, 96, 20);
 		painelDadosPessoais.add(txtCep);
 

@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import br.com.felipe.jdbc.ConnectionFactory;
 import br.com.felipe.model.Clientes;
-import jdk.nashorn.internal.ir.CatchNode;
+import br.com.felipe.util.WebServiceCep;
 
 public class ClientesDAO {
 
@@ -160,6 +160,26 @@ public class ClientesDAO {
 			return null;
 		}
 	}
+	
+	  public Clientes buscaCep(String cep) {
+	       
+	        WebServiceCep webServiceCep = WebServiceCep.searchCep(cep);
+	       
+
+	        Clientes obj = new Clientes();
+
+	        if (webServiceCep.wasSuccessful()) {
+	            obj.setEndereco(webServiceCep.getLogradouroFull());
+	            obj.setCidade(webServiceCep.getCidade());
+	            obj.setBairro(webServiceCep.getBairro());
+	            obj.setEstado(webServiceCep.getUf());
+	            return obj;
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Erro numero: " + webServiceCep.getResulCode());
+	            JOptionPane.showMessageDialog(null, "Descrição do erro: " + webServiceCep.getResultText());
+	            return null;
+	        }
+	  }
 
 	public List<Clientes> buscarPorNome(String nome) {
 		try {
