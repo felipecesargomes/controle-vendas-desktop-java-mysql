@@ -324,6 +324,35 @@ public class FrmCliente extends JFrame {
 		txtCpf.setColumns(10);
 		txtCpf.setBounds(275, 164, 162, 20);
 		painelDadosPessoais.add(txtCpf);
+		
+		JButton btnPesquisa = new JButton("Pesquisar");
+		btnPesquisa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nome = textNome.getText();
+				ClientesDAO cdao = new ClientesDAO();
+				Clientes obj = cdao.pesquisaPorNome(nome);
+				if(obj.getNome() != null) {
+					textCodigo.setText(obj.getId().toString());
+					textNome.setText(obj.getNome());
+					txtEmail.setText(obj.getEmail());
+					txtCelular.setText(obj.getCelular());
+					txtTel.setText(obj.getTelefone());
+					txtCep.setText(obj.getCep());
+					txtEndereco.setText(obj.getEndereco());
+					txtNumero.setText(String.valueOf(obj.getNumero()));
+					txtBairro.setText(obj.getBairro());
+					txtCidade.setText(obj.getCidade());
+					txtComplemento.setText(obj.getComplemento());
+					cbUf.setSelectedItem(obj.getEstado());
+					txtCpf.setText(obj.getCpf());
+					txtRg.setText(obj.getRg());	
+				} else {
+					JOptionPane.showMessageDialog(null, "Não existe esse cadastro no banco.");
+				}
+			}
+		});
+		btnPesquisa.setBounds(279, 50, 89, 18);
+		painelDadosPessoais.add(btnPesquisa);
 
 		JPanel panel_1 = new JPanel();
 		tabbedPane_1.addTab("Consulta de Clientes", null, panel_1, null);
@@ -490,5 +519,4 @@ public class FrmCliente extends JFrame {
 		botaoExcluir.setBounds(515, 332, 89, 23);
 		contentPane.add(botaoExcluir);
 	}
-
 }

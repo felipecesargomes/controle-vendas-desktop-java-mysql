@@ -131,6 +131,35 @@ public class ClientesDAO {
 			return null;
 		}
 	}
+	
+	public Clientes pesquisaPorNome(String nome) {
+		try {
+			String sql = "select * from tb_clientes where nome = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, nome);
+			ResultSet rs = stmt.executeQuery();
+			Clientes obj = new Clientes();
+			if (rs.next()) {
+				obj.setId(rs.getLong("id"));
+				obj.setNome(rs.getString("nome"));
+				obj.setRg(rs.getString("rg"));
+				obj.setCpf(rs.getString("cpf"));
+				obj.setEmail(rs.getString("email"));
+				obj.setBairro(rs.getString("bairro"));
+				obj.setCelular(rs.getString("celular"));
+				obj.setCep(rs.getString("cep"));
+				obj.setCidade(rs.getString("cidade"));
+				obj.setComplemento(rs.getString("complemento"));
+				obj.setEndereco(rs.getString("endereco"));
+				obj.setEstado(rs.getString("estado"));
+				obj.setNumero(rs.getInt("numero"));
+				obj.setTelefone(rs.getString("telefone"));
+			}
+				return obj;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 	public List<Clientes> buscarPorNome(String nome) {
 		try {
