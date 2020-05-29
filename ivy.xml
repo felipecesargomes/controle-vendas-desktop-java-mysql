@@ -3,7 +3,7 @@
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
 
 	<info module="controle-vendas-desktop-java-mysql"
-		organisation="br.com.caelum" />
+		organisation="br.com.felipe" />
 
 	<dependencies>
 		<dependency org="mysql" name="mysql-connector-java"
