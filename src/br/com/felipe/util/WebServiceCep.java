@@ -10,6 +10,10 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 /**
+ * @author Felipe César
+ */
+
+/**
  * Ferramenta de busca de CEP, veja o mï¿½todo {@link WebServiceCep#searchCep(String)} para
  * maiores informaï¿½ï¿½es.
  * <BR>

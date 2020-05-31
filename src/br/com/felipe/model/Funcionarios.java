@@ -1,10 +1,16 @@
 package br.com.felipe.model;
 
+import br.com.felipe.util.Tratamentos;
+
 public class Funcionarios extends Clientes {
 
+	/**
+	 * @author Felipe César
+	 */
+	
 	private String senha;
 	private String cargo;
-	private String nivel_acesso;
+	private String nivelAcesso;
 	
 	public String getSenha() {
 		return senha;
@@ -16,13 +22,13 @@ public class Funcionarios extends Clientes {
 		return cargo;
 	}
 	public void setCargo(String cargo) {
-		this.cargo = cargo;
+		this.cargo = Tratamentos.removerAcentosUpperCase(cargo);
 	}
-	public String getNivel_acesso() {
-		return nivel_acesso;
+	public String getNivelAcesso() {
+		return nivelAcesso;
 	}
-	public void setNivel_acesso(String nivel_acesso) {
-		this.nivel_acesso = nivel_acesso;
+	public void setNivelAcesso(String nivelAcesso) {
+		this.nivelAcesso = Tratamentos.removerAcentosUpperCase(nivelAcesso);
 	}
 	
 }
